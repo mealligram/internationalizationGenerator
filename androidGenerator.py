@@ -10,44 +10,42 @@ es = []
 hans = []
 hant = []
 
-with open('int.csv', encoding="utf-8", newline='\n') as f:
-    reader = csv.reader(f)
-    for row in reader:
-        print(row)
-        key.append(row[0])
-        property.append(row[1])
-        kr.append(row[2])
-        en.append(row[3])
-        jp.append(row[4])
-        es.append(row[5])
-        hans.append(row[6])
-        hant.append(row[7])
 
+kr_stringFile = open('./ko_strings.xml', 'w')
+en_stringFile = open('./en_strings.xml', 'w')
+es_stringFile = open('./es-419_strings.xml', 'w')
+jp_stringFile = open('./jp_strings.xml', 'w')
+hant_stringFile = open('./hant_strings.xml', 'w')
+hans_stringFile = open('./hans_strings.xml', 'w')
 
-root = Element('resource')
+def get_csv():
+    with open('int.csv', newline='') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            key.append(row[0])
+            property.append(row[1])
+            kr.append(row[2])
+            en.append(row[3])
+            jp.append(row[4])
+            es.append(row[5])
+            hans.append(row[6])
+            hant.append(row[7])
 
-for index in range(len(key)):
-    _string = "string name=" + "\"" + key[index] +"\""
-    # xmlString = string
-    SubElement(root,_string).text = kr[index]
+def generate_string_Field():
+    for index in range(len(key)):
+        krString = "<string name=\"" + key[index] + "\">" + kr[index] + "</string>" + "\n"
+        enString = "<string name=\"" + key[index] + "\">" + en[index] + "</string>" + "\n"
+        esString = "<string name=\"" + key[index] + "\">" + es[index] + "</string>" + "\n"
+        jpString = "<string name=\"" + key[index] + "\">" + jp[index] + "</string>" + "\n"
+        hansString = "<string name=\"" + key[index] + "\">" + hans[index] + "</string>" + "\n"
+        hantString = "<string name=\"" + key[index] + "\">" + hant[index] + "</string>" + "\n"
 
+        kr_stringFile.write(krString)
+        en_stringFile.write(enString)
+        es_stringFile.write(esString)
+        jp_stringFile.write(jpString)
+        hans_stringFile.write(hansString)
+        hant_stringFile.write(hantString)
 
-def indent(elem, level=0): #자료 출처 https://goo.gl/J8VoDK
-    i = "\n" + level*"  "
-    if len(elem):
-        if not elem.text or not elem.text.strip():
-            elem.text = i + "  "
-        if not elem.tail or not elem.tail.strip():
-            elem.tail = i
-        for elem in elem:
-            indent(elem, level+1)
-        if not elem.tail or not elem.tail.strip():
-            elem.tail = i
-    else:
-        if level and (not elem.tail or not elem.tail.strip()):
-            elem.tail = i
-
-dump(root)
-
-tree = ElementTree(root)
-tree.write('test1.xml')
+get_csv()
+generate_string_Field()
