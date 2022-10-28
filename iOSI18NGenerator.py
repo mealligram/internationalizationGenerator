@@ -28,32 +28,50 @@ hant_stringFile = open('./hant.strings', 'w')
 hans_stringFile = open('./hans.strings', 'w')
 i18n_file = open('./I18N.swift', 'w')
 
+def get_csv():
+    with open('int.csv', newline='') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            key.append(row[0])
+            property.append(row[1])
+            kr.append(row[2])
+            en.append(row[3])
+            jp.append(row[4])
+            es.append(row[5])
+            hans.append(row[6])
+            hant.append(row[7])
 
-with open('int.csv', newline='') as f:
-    reader = csv.reader(f)
-    for row in reader:
-        key.append(row[0])
-        property.append(row[1])
-        kr.append(row[2])
-        en.append(row[3])
-        jp.append(row[4])
-        es.append(row[5])
-        hans.append(row[6])
-        hant.append(row[7])
+def generate_string_Field():
+    for index in range(len(key)):
+        krString = key[index] + " = " + "\"" + kr[index] + "\"" + ";\n"
+        enString = key[index] + " = " + "\"" + en[index] + "\"" + ";\n"
+        esString = key[index] + " = " + "\"" + es[index] + "\"" + ";\n"
+        jpString = key[index] + " = " + "\"" + jp[index] + "\"" + ";\n"
+        hansString = key[index] + " = " + "\"" + hans[index] + "\"" + ";\n"
+        hantString = key[index] + " = " + "\"" + hant[index] + "\"" + ";\n"
 
-for index in range(len(key)):
-    krString = key[index] + " = " + "\"" + kr[index] + "\"" + ";\n"
-    enString = key[index] + " = " + "\"" + en[index] + "\"" + ";\n"
-    esString = key[index] + " = " + "\"" + es[index] + "\"" + ";\n"
-    jpString = key[index] + " = " + "\"" + jp[index] + "\"" + ";\n"
-    hansString = key[index] + " = " + "\"" + hans[index] + "\"" + ";\n"
-    hantString = key[index] + " = " + "\"" + hant[index] + "\"" + ";\n"
-    I18NString = "static let " + key[index] + " = " + "\"" + key[index] + "\"" + ".localized\n"
+        kr_stringFile.write(krString)
+        en_stringFile.write(enString)
+        es_stringFile.write(esString)
+        jp_stringFile.write(jpString)
+        hans_stringFile.write(hansString)
+        hant_stringFile.write(hantString)
 
-    kr_stringFile.write(krString)
-    en_stringFile.write(enString)
-    es_stringFile.write(esString)
-    jp_stringFile.write(jpString)
-    hans_stringFile.write(hansString)
-    hant_stringFile.write(hantString)
-    i18n_file.write(I18NString)
+def get_content_I18N():
+    for index in range(len(key)):
+        I18NString = "static let " + key[index] + " = " + "\"" + key[index] + "\"" + ".localized\n"
+        i18n_file.write(I18NString)
+
+### I18NString
+### I18N 완전체가 필요시
+def get_total_I18N():
+    i18n_file.write("struct I18N {\n")
+    for index in range(len(key)):
+        I18NString = "\t" + "static let " + key[index] + " = " + "\"" + key[index] + "\"" + ".localized\n"
+        i18n_file.write(I18NString)
+    i18n_file.write("}\n")
+
+
+get_csv()
+generate_string_Field()
+get_total_I18N()
