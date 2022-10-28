@@ -43,12 +43,12 @@ def get_csv():
 
 def generate_string_Field():
     for index in range(len(key)):
-        krString = key[index] + " = " + "\"" + kr[index].replace("%d", "%@") + "\"" + ";\n"
-        enString = key[index] + " = " + "\"" + en[index].replace("%d", "%@") + "\"" + ";\n"
-        esString = key[index] + " = " + "\"" + es[index].replace("%d", "%@") + "\"" + ";\n"
-        jpString = key[index] + " = " + "\"" + jp[index].replace("%d", "%@") + "\"" + ";\n"
-        hansString = key[index] + " = " + "\"" + hans[index].replace("%d", "%@") + "\"" + ";\n"
-        hantString = key[index] + " = " + "\"" + hant[index].replace("%d", "%@") + "\"" + ";\n"
+        krString = key[index] + " = " + "\"" + kr[index].replace("%s", "%@") + "\"" + ";\n"
+        enString = key[index] + " = " + "\"" + en[index].replace("%s", "%@") + "\"" + ";\n"
+        esString = key[index] + " = " + "\"" + es[index].replace("%s", "%@") + "\"" + ";\n"
+        jpString = key[index] + " = " + "\"" + jp[index].replace("%s", "%@") + "\"" + ";\n"
+        hansString = key[index] + " = " + "\"" + hans[index].replace("%s", "%@") + "\"" + ";\n"
+        hantString = key[index] + " = " + "\"" + hant[index].replace("%s", "%@") + "\"" + ";\n"
 
         kr_stringFile.write(krString)
         en_stringFile.write(enString)
